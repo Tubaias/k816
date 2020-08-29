@@ -42,7 +42,7 @@ public class Drawer {
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
 
         font = new BitmapFont();
-        font.setColor(Color.RED);
+        font.setColor(Color.GOLD);
     }
 
     public void drawFrame() {
@@ -59,14 +59,7 @@ public class Drawer {
 		
         batch.begin();
 
-        if (world.drawSorted) {
-            drawGround();
-            font.setColor(Color.GOLD);
-        } else {
-            drawGroundBad();
-            font.setColor(Color.RED);
-        }
-
+        drawGround();
         drawObjects();
 
         for (Unit unit : world.getUnits()) {
@@ -91,22 +84,7 @@ public class Drawer {
 
         batch.end();
 
-        uiBatch.begin();
-        font.draw(uiBatch, "" + fps, 10, 20);
-        uiBatch.end();
-    }
-
-    private void drawGroundBad() {
-        TileMap map = world.getTerrainMap();
-
-        for (int x = 0; x < map.width; x++) {
-            for (int y = 0; y < map.height; y++) {
-                int posX = (x - y) * HALFTILEWIDTH;
-                int posY = (x + y) * HALFTILEHEIGHT;
-
-                batch.draw(map.getTexture(map.tiles[x][y]), posX, posY);
-            }
-        }
+        drawUI();
     }
 
     private void drawGround() {
@@ -143,6 +121,20 @@ public class Drawer {
                 }
             }
         }
+    }
+
+    private void drawUI() {
+        uiBatch.begin();
+
+        font.draw(uiBatch, "" + fps, 10, 20);
+
+        for (HudElement elem : player.getHud().elements) {
+            if (elem.visible) {
+                uiBatch.draw(elem.sprite, elem.pos.x, elem.pos.y);
+            }
+        }
+
+        uiBatch.end();
     }
 
     private void updateFPS() {

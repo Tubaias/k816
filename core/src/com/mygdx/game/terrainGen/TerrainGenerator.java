@@ -64,7 +64,7 @@ public class TerrainGenerator {
         int[][] obj = new int[map.width][map.height];
 
         obj = generateTrees(map, obj);
-        obj = generateRocks(map, obj);
+        //obj = generateRocks(map, obj);
 
         return new TileMap(map.width, map.height, obj, objectTextures, objectTypes);
     }
@@ -91,6 +91,7 @@ public class TerrainGenerator {
         return obj;
     }
 
+    /*
     private int[][] generateRocks(TileMap map, int[][] obj) {
         PerlinGenerator rockGen = new PerlinGenerator(rng.nextInt(100_000));
         double scale = 1d / (rng.nextInt(50) + 1);
@@ -120,4 +121,5 @@ public class TerrainGenerator {
 
         return obj;
     }
+    */
 }

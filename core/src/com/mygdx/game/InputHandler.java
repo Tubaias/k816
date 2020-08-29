@@ -59,6 +59,10 @@ public class InputHandler {
                 fullscreen = true;
             }
         }
+
+        if (Gdx.input.isKeyJustPressed(Keys.F10)) {
+            player.toggleHud();
+        }
     }
 
     private void cameraZoom() {
@@ -93,12 +97,13 @@ public class InputHandler {
     }
 
     private void handleLeftClick() {
-        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
             Vector3 unprojectedPos = viewport.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
             Vector2 clickPos = new Vector2(unprojectedPos.x, unprojectedPos.y);
 
-            if (!Gdx.input.isKeyPressed(Keys.SHIFT_LEFT)) {
-                player.unselect();
+            boolean shiftIsPressed = Gdx.input.isKeyPressed(Keys.SHIFT_LEFT);
+            if (!shiftIsPressed) {
+                player.deselectAll();
             }
 
             for (Unit unit : world.getUnits()) {
@@ -106,7 +111,7 @@ public class InputHandler {
                     && clickPos.x < unit.pos.x + unit.getWidth() + unit.getOffsetX()
                     && clickPos.y > unit.pos.y + unit.getOffsetY()
                     && clickPos.y < unit.pos.y + unit.getHeight() + unit.getOffsetY()) {
-                        player.selectUnit(unit);
+                        player.selectUnit(unit, shiftIsPressed);
                         break;
                 }
             }

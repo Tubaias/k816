@@ -7,21 +7,45 @@ import com.mygdx.game.entity.unit.Unit;
 import com.mygdx.game.entity.Target;
 
 public class Player {
+    private GameHud hud;
     private ArrayList<Target> targets;
     private Texture unitSelTexture;
     
     public Player() {
         this.targets = new ArrayList<>();
         this.unitSelTexture = new Texture("unitSelection.png");
+        this.hud = new GameHud();
     }
 
-    public void selectUnit(Unit unit) {
-        if (unitIsTargeted(unit)) { return; }
+    public void selectUnit(Unit unit, boolean toggle) {
+        if (unitIsTargeted(unit)) {
+            if (toggle) {
+                deselectUnit(unit);
+            }
+
+            if (targets.isEmpty()) {
+                hud.disablePortraitBorder();
+            }
+
+            return;
+        }
+
         targets.add(new Target(unitSelTexture, unit));
+        hud.enablePortraitBorder();
     }
 
-    public void unselect() {
+    public void deselectUnit(Unit unit) {
+        for (Target t : targets) {
+            if (t.getUnit().equals(unit)) {
+                targets.remove(t);
+                return;
+            }
+        }
+    }
+
+    public void deselectAll() {
         targets.clear();
+        hud.disablePortraitBorder();
     }
 
     public void updateTargets() {
@@ -42,5 +66,13 @@ public class Player {
         }
 
         return false;
+    }
+
+    public GameHud getHud() {
+        return this.hud;
+    }
+
+    public void toggleHud() {
+        hud.toggle(!targets.isEmpty());
     }
 }
