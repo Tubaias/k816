@@ -12,6 +12,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.entity.unit.Unit;
 import com.mygdx.game.entity.Target;
 import com.mygdx.game.entity.targetIndicator;
+import com.mygdx.game.hud.HudElement;
+import com.mygdx.game.hud.UnitPortrait;
 
 public class Drawer {
     private final int TILEWIDTH = 128;
@@ -134,6 +136,11 @@ public class Drawer {
             }
         }
 
+        UnitPortrait p = player.getHud().unitPortrait;
+        if (p.visible) {
+            uiBatch.draw(p.sprite, p.pos.x, p.pos.y);
+        }
+        
         uiBatch.end();
     }
 

@@ -63,26 +63,30 @@ public class TerrainGenerator {
     public TileMap generateObjects(TileMap map, Texture[] objectTextures, int objectTypes) {
         int[][] obj = new int[map.width][map.height];
 
-        obj = generateTrees(map, obj);
+        obj = generateTreesAndBushes(map, obj);
         //obj = generateRocks(map, obj);
 
         return new TileMap(map.width, map.height, obj, objectTextures, objectTypes);
     }
 
-    private int[][] generateTrees(TileMap map, int[][] obj) {
+    private int[][] generateTreesAndBushes(TileMap map, int[][] obj) {
         PerlinGenerator treeGen = new PerlinGenerator(rng.nextInt(100_000));
         double scale = 1d / (rng.nextInt(100) + 1);
         double[][] noise2D = ArrayFiller.fill2DArray(map.width, map.height, scale, treeGen);
+
+        double treeShift = 0.4;
+        double bushShift = 0.5;
 
         for (int x = 0; x < map.width; x++) {
             for (int y = 0; y < map.height; y++) {
                 if (map.tiles[x][y] == 2) {
                     double noiseVal = noise2D[x][y];
                     double treeChance = rng.nextDouble();
-                    double shift = 0.4;
 
-                    if (noiseVal > treeChance + shift) {
+                    if (noiseVal > treeChance + treeShift) {
                         obj[x][y] = 1;
+                    } else if (noiseVal < 0.6 && noiseVal > rng.nextDouble() + bushShift) {
+                        obj[x][y] = 2;
                     }
                 }
             }

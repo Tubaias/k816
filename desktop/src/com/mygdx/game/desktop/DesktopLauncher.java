@@ -8,7 +8,8 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 
-		config.setTitle("gamer");
+		config.setTitle("KIITOS 8 - 16");
+		config.setWindowIcon("816icon.png");
 		config.setWindowedMode(1280, 720);
 		config.setResizable(true);
 		config.useVsync(false);

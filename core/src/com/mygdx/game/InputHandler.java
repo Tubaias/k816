@@ -39,10 +39,6 @@ public class InputHandler {
         if (Gdx.input.isKeyPressed(Keys.G)) {
             world.generate();
         }
-
-        if (Gdx.input.isKeyJustPressed(Keys.R)) {
-            world.drawSorted = !world.drawSorted;
-        }
     }
 
     private void handleSystemKeys() {

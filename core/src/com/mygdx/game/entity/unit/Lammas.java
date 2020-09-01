@@ -9,8 +9,8 @@ import com.mygdx.game.entity.targetIndicator;
 public class Lammas extends Unit {
     int number;
 
-    public Lammas(Texture tex, float x, float y, int number) {
-        super(tex, x, y);
+    public Lammas(Texture tex, Texture portraitTex, float x, float y, int number) {
+        super(tex, portraitTex, x, y);
         this.speed = 3;
 
         this.number = number;

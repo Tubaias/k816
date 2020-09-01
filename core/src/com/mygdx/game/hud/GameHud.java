@@ -1,20 +1,24 @@
-package com.mygdx.game;
+package com.mygdx.game.hud;
 
 import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
 public class GameHud {
     public boolean isEnabled;
     public ArrayList<HudElement> elements;
     private HudElement unitPortraitBorder;
+    public UnitPortrait unitPortrait;
 
     public GameHud() {
         this.isEnabled = true;
         this.elements = new ArrayList<>();
 
         createHud();
+
+        toggle(false);
     }
 
     private void createHud() {
@@ -24,18 +28,22 @@ public class GameHud {
         unitPortraitBorder = new HudElement(new Vector2(0, 0), new Texture("unitPortraitBorder.png"), true);
         unitPortraitBorder.visible = false;
         elements.add(unitPortraitBorder);
+
+        unitPortrait = new UnitPortrait(new Vector2(406, 4), new Sprite(new Texture("unitPortraitBase.png")), true);
+        unitPortrait.visible = false;
     }
 
-    public void enablePortraitBorder() {
+    public void setPortraitStatus(boolean status) {
         if (!isEnabled) { return; }
 
-        unitPortraitBorder.visible = true;
-        unitPortraitBorder.interactive = true;
+        unitPortraitBorder.visible = status;
+        unitPortraitBorder.interactive = status;
+        unitPortrait.visible = status;
+        unitPortrait.interactive = status;
     }
 
-    public void disablePortraitBorder() {
-        unitPortraitBorder.visible = false;
-        unitPortraitBorder.interactive = false;
+    public void setUnitPortraitImage(Sprite portrait) {
+        unitPortrait.setImage(portrait);
     }
 
     public void toggle(boolean portraitBorderStatus) {
@@ -46,8 +54,7 @@ public class GameHud {
         }
 
         if (isEnabled) {
-            unitPortraitBorder.visible = portraitBorderStatus;
-            unitPortraitBorder.interactive = portraitBorderStatus;
+            setPortraitStatus(portraitBorderStatus);
         }
     }
 }

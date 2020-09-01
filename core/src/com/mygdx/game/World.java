@@ -20,8 +20,7 @@ public class World {
     private int tileTypes;
     private int objectTypes;
     private Texture sheepWorkerTex;
-
-    public boolean drawSorted;
+    private Texture sheepWorkerPortrait;
     
     public World() {
         this.width = 512;
@@ -29,24 +28,23 @@ public class World {
         this.units = new ArrayList<>();
 
         sheepWorkerTex = new Texture("sheepWorker.png");
+        sheepWorkerPortrait = new Texture("sheepWorkerIcon.png");
 
         tileTypes = 4;
         tileTextures = new Texture[tileTypes];
         tileTextures[0] = new Texture("waterTile.png");
         tileTextures[1] = new Texture("sandTile.png");
-        tileTextures[2] = new Texture("greenTile.png");
+        tileTextures[2] = new Texture("grassTile.png");
         tileTextures[3] = new Texture("stoneTile.png");
 
         objectTypes = 2;
         objectTextures = new Texture[objectTypes];
         objectTextures[0] = new Texture("viisi.png");
-        objectTextures[1] = new Texture("rock.png");
+        objectTextures[1] = new Texture("marjaPuskaSlim.png");
 
         gen = new TerrainGenerator();
         terrainMap = gen.generateTileMap(width, height, tileTextures, tileTypes);
         objectMap = gen.generateObjects(terrainMap, objectTextures, objectTypes);
-
-        drawSorted = true;
     }
 
     public void tick() {
@@ -60,7 +58,7 @@ public class World {
     }
 
     public void createLammas(float x, float y, int number) {
-        units.add(new Lammas(sheepWorkerTex, x, y, number));
+        units.add(new Lammas(sheepWorkerTex, sheepWorkerPortrait, x, y, number));
     }
 
     public TileMap getTerrainMap() {

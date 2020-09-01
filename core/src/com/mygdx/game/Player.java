@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.entity.unit.Unit;
 import com.mygdx.game.entity.Target;
+import com.mygdx.game.hud.GameHud;
 
 public class Player {
     private GameHud hud;
@@ -24,14 +25,15 @@ public class Player {
             }
 
             if (targets.isEmpty()) {
-                hud.disablePortraitBorder();
+                hud.setPortraitStatus(false);
             }
 
             return;
         }
 
         targets.add(new Target(unitSelTexture, unit));
-        hud.enablePortraitBorder();
+        hud.setPortraitStatus(true);
+        hud.setUnitPortraitImage(unit.getPortraitSprite());
     }
 
     public void deselectUnit(Unit unit) {
@@ -45,7 +47,7 @@ public class Player {
 
     public void deselectAll() {
         targets.clear();
-        hud.disablePortraitBorder();
+        hud.setPortraitStatus(false);
     }
 
     public void updateTargets() {

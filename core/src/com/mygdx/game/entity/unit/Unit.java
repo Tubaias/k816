@@ -12,12 +12,14 @@ public abstract class Unit {
     public ArrayDeque<targetIndicator> targetQueue;
 
     protected Sprite sprite;
+    protected Sprite portrait;
     protected float speed;
     protected Texture targetTex;
 
-    public Unit(Texture tex, float x, float y) {
+    public Unit(Texture tex, Texture portraitTex, float x, float y) {
         this.pos = new Vector2(x, y);
         this.sprite = new Sprite(tex);
+        this.portrait = new Sprite(portraitTex);
         this.targetTex = new Texture("target.png");
         this.targetQueue = new ArrayDeque<>();
     }
@@ -28,6 +30,10 @@ public abstract class Unit {
     
     public Sprite getSprite() {
         return this.sprite;
+    }
+
+    public Sprite getPortraitSprite() {
+        return this.portrait;
     }
 
     public float getWidth() {
