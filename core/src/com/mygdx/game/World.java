@@ -39,7 +39,7 @@ public class World {
 
         objectTypes = 2;
         objectTextures = new Texture[objectTypes];
-        objectTextures[0] = new Texture("viisi.png");
+        objectTextures[0] = new Texture("kuusi.png");
         objectTextures[1] = new Texture("marjaPuskaSlim.png");
 
         gen = new TerrainGenerator();
